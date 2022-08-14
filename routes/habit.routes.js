@@ -9,7 +9,7 @@ const {
 
 const protect = require("../middleware/auth.middleware");
 
-router.route("/").get(getHabits).post(setHabit);
-router.route("/:id").put(updateHabit).delete(deleteHabit);
+router.route("/").get(protect, getHabits).post(protect, setHabit);
+router.route("/:id").put(protect, updateHabit).delete(protect, deleteHabit);
 
 module.exports = router;
