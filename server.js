@@ -13,6 +13,7 @@ const app = express();
 
 app.use(express.json());
 
+app.use("/", require("./routes/landing.routes"));
 app.use("/api/v1/habits", require("./routes/habit.routes"));
 app.use("/api/v1/users", require("./routes/user.routes"));
 
