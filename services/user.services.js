@@ -47,11 +47,11 @@ const loginOneUser = async (email, password) => {
   const isPwCorrect = await bcrypt.compare(password, user.password);
   if (user && isPwCorrect) {
     (result.success = true), (result.message = "Login successfully");
-    result.token = generateToken(user._id);
     result.data = {
       id: user._id,
       username: user.username,
       email: user.email,
+      token: generateToken(user._id),
     };
   } else if (!isPwCorrect) {
     throw new Error("wrongPw");
