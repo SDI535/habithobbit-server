@@ -7,6 +7,10 @@ const generateToken = (id) => {
   return jwt.sign({ id }, process.env.JWT_SECRET, { expiresIn: "30d" });
 };
 
+const expiredToken = (id) => {
+  return jwt.sign({ id }, process.env.JWT_SECRET, { expiresIn: "1ms" });
+};
+
 const registerOneUser = async (username, email, password) => {
   let result = {};
 
@@ -69,4 +73,21 @@ const getUserProfile = async (user) => {
   return result;
 };
 
-module.exports = { registerOneUser, loginOneUser, getUserProfile };
+const logoutOneUser = async (user) => {
+  let result = {};
+  const userExists = await User.findById(user);
+  if (userExists) {
+    (result.success = true), (result.message = "Logout successfully");
+    result.data = {
+      token: expiredToken(userExists._id),
+    };
+  }
+  return result;
+};
+
+module.exports = {
+  registerOneUser,
+  loginOneUser,
+  getUserProfile,
+  logoutOneUser,
+};
