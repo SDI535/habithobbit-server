@@ -66,7 +66,7 @@ const getProfile = async (req, res, next) => {
   }
 };
 
-// @desc  LOGOUT User from server, set token exp to 1ms
+// @desc  Logout User from server, set token exp to 1ms
 // @route POST  /api/v1/users/logout
 // @access Private
 
