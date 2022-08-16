@@ -8,6 +8,7 @@ const {
   registerOneUser,
   loginOneUser,
   getUserProfile,
+  logoutOneUser,
 } = require("../services/user.services");
 
 // @desc Register new user
@@ -65,8 +66,19 @@ const getProfile = async (req, res, next) => {
   }
 };
 
+const logoutUser = async (req, res, next) => {
+  const user = req.user.id;
+  try {
+    const result = await logoutOneUser(user);
+    res.status(200).json(result);
+  } catch (error) {
+    next();
+  }
+};
+
 module.exports = {
   registerUser,
   loginUser,
   getProfile,
+  logoutUser,
 };
