@@ -66,6 +66,10 @@ const getProfile = async (req, res, next) => {
   }
 };
 
+// @desc  LOGOUT User from server, set token exp to 1ms
+// @route POST  /api/v1/users/logout
+// @access Private
+
 const logoutUser = async (req, res, next) => {
   const user = req.user.id;
   try {
