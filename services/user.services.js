@@ -55,8 +55,8 @@ const loginOneUser = async (email, password) => {
       id: user._id,
       username: user.username,
       email: user.email,
-      token: generateToken(user._id),
     };
+    result.token = generateToken(user._id);
   } else if (!isPwCorrect) {
     throw new Error("wrongPw");
   }
