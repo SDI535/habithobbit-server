@@ -29,6 +29,15 @@ const habitSchema = mongoose.Schema(
     endDate: {
       type: Date,
     },
+    targetCount: {
+      type: Number,
+    },
+    currentCount: {
+      type: Number,
+    },
+    private: {
+      type: Boolean,
+    },
   },
   {
     timestamps: true,
