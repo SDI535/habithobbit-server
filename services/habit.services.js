@@ -15,6 +15,7 @@ const getAllHabits = async (user) => {
   return result;
 };
 
+//create a new habit
 const createOneHabit = async (
   user,
   name,
