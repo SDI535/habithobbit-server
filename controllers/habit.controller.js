@@ -27,16 +27,16 @@ const getHabits = async (req, res, next) => {
 
 const setHabit = async (req, res, next) => {
   const user = req.user.id;
+  const {
+    name,
+    description,
+    frequency,
+    endDate,
+    targetCount,
+    currentCount,
+    private,
+  } = req.body;
   try {
-    const {
-      name,
-      description,
-      frequency,
-      endDate,
-      targetCount,
-      currentCount,
-      private,
-    } = req.body;
     const result = await createOneHabit(
       user,
       name,
