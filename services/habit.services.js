@@ -15,7 +15,16 @@ const getAllHabits = async (user) => {
   return result;
 };
 
-const createOneHabit = async (user, name, description, frequency, endDate) => {
+const createOneHabit = async (
+  user,
+  name,
+  description,
+  frequency,
+  endDate,
+  targetCount,
+  currentCount,
+  private
+) => {
   let result = {};
 
   const habit = await Habit.create({
@@ -24,6 +33,9 @@ const createOneHabit = async (user, name, description, frequency, endDate) => {
     description,
     frequency,
     endDate,
+    targetCount,
+    currentCount,
+    private,
   });
   if (habit) {
     (result.success = true), (result.message = "Habit created successfully");
