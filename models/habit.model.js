@@ -31,6 +31,7 @@ const habitSchema = mongoose.Schema(
     },
     targetCount: {
       type: Number,
+      required: true,
     },
     currentCount: {
       type: Number,
