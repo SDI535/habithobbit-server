@@ -15,6 +15,28 @@ const getAllHabits = async (user) => {
   return result;
 };
 
+const getOneHabit = async (userId, habitId) => {
+  let result = {};
+  const user = await User.findById(userId);
+  if (!user) {
+    throw new Error("userNotFound");
+  }
+  const habit = await Habit.findById(habitId);
+  //check habit user matches login user
+  if (habit.user.toString() !== user.id) {
+    throw new Error("userUnauthorized");
+  }
+
+  if (habit) {
+    result.success = true;
+    result.message = `Get habit id ${habitId} successfully`;
+    result.data = habit;
+  } else {
+    throw new Error("habitNotFound");
+  }
+  return result;
+};
+
 const createOneHabit = async (
   user,
   name,
@@ -100,4 +122,5 @@ module.exports = {
   createOneHabit,
   updateOneHabit,
   deleteOneHabit,
+  getOneHabit,
 };
