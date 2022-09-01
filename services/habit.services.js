@@ -37,6 +37,7 @@ const getOneHabit = async (userId, habitId) => {
   return result;
 };
 
+//create a new habit
 const createOneHabit = async (
   user,
   name,
