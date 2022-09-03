@@ -6,6 +6,7 @@ const {
   updateHabit,
   deleteHabit,
   getHabit,
+  getPublicHabits,
 } = require("../controllers/habit.controller");
 
 const protect = require("../middleware/auth.middleware");
@@ -16,5 +17,7 @@ router
   .put(protect, updateHabit)
   .delete(protect, deleteHabit)
   .get(protect, getHabit);
+
+router.get("/public", protect, getPublicHabits);
 
 module.exports = router;
