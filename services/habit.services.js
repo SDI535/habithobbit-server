@@ -1,3 +1,4 @@
+const { RestoreRequestFilterSensitiveLog } = require("@aws-sdk/client-s3");
 const Habit = require("../models/habit.model");
 const User = require("../models/user.model");
 
@@ -12,6 +13,27 @@ const getAllHabits = async (user) => {
     throw new Error();
   }
 
+  return result;
+};
+
+const getAllPublicHabits = async (user) => {
+  let result = {};
+  const userExist = await User.findById(user);
+  if (!userExist) {
+    throw new Error("userNotFound");
+  }
+  const publicHabits = await Habit.find({ private: false }).populate({
+    path: "user",
+    select: ["username", "avatarUrl"],
+  });
+  console.log(publicHabits);
+  if (publicHabits) {
+    result.success = true;
+    result.message = "Get all public habits successfully";
+    result.data = publicHabits;
+  } else {
+    throw new Error();
+  }
   return result;
 };
 
@@ -124,4 +146,5 @@ module.exports = {
   updateOneHabit,
   deleteOneHabit,
   getOneHabit,
+  getAllPublicHabits,
 };

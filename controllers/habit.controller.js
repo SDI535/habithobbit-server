@@ -6,6 +6,7 @@ const {
   updateOneHabit,
   deleteOneHabit,
   getOneHabit,
+  getAllPublicHabits,
 } = require("../services/habit.services");
 
 // @desc Get all habits of a user
@@ -16,6 +17,22 @@ const getHabits = async (req, res, next) => {
   const user = req.user.id;
   try {
     const result = await getAllHabits(user);
+    res.status(200).json(result);
+  } catch (error) {
+    next();
+  }
+};
+
+// @desc Get all public habits in habithobbit
+// @route GET /api/v1/habits/public
+// @acess Private
+
+const getPublicHabits = async (req, res, next) => {
+  const user = req.user.id;
+  try {
+    console.log("getting public habits");
+    const result = await getAllPublicHabits(user);
+    // console.log(result);
     res.status(200).json(result);
   } catch (error) {
     next();
@@ -125,4 +142,5 @@ module.exports = {
   updateHabit,
   deleteHabit,
   getHabit,
+  getPublicHabits,
 };
