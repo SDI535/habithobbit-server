@@ -26,7 +26,7 @@ const getAllPublicHabits = async (user) => {
     path: "user",
     select: ["username", "avatarUrl"],
   });
-  console.log(publicHabits);
+
   if (publicHabits) {
     result.success = true;
     result.message = "Get all public habits successfully";
