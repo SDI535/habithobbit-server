@@ -22,10 +22,12 @@ const getAllPublicHabits = async (user) => {
   if (!userExist) {
     throw new Error("userNotFound");
   }
-  const publicHabits = await Habit.find({ private: false }).populate({
-    path: "user",
-    select: ["username", "avatarUrl"],
-  });
+  const publicHabits = await Habit.find({ private: false })
+    .populate({
+      path: "user",
+      select: ["username", "avatarUrl"],
+    })
+    .sort({ createdAt: -1 });
 
   if (publicHabits) {
     result.success = true;
