@@ -32,9 +32,7 @@ const getHabits = async (req, res, next) => {
 const getPublicHabits = async (req, res, next) => {
   const user = req.user.id;
   try {
-    console.log("getting public habits");
     const result = await getAllPublicHabits(user);
-    // console.log(result);
     res.status(200).json(result);
   } catch (error) {
     next();
