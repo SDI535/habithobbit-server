@@ -7,6 +7,8 @@ const {
   deleteOneHabit,
   getOneHabit,
   getAllPublicHabits,
+  likeOneHabit,
+  unlikeOneHabit,
 } = require("../services/habit.services");
 
 // @desc Get all habits of a user
@@ -136,6 +138,55 @@ const deleteHabit = async (req, res, next) => {
   }
 };
 
+// @desc Like a habit
+// @route PUT /api/v1/habits/:id/like
+// @acess Private
+
+const likeHabit = async (req, res, next) => {
+  const userId = req.user.id;
+
+  const habitId = req.params.id;
+
+  try {
+    const result = await likeOneHabit(userId, habitId);
+    res.status(200).send(result);
+  } catch (error) {
+    if (error.message === "habitNotFound") {
+      next({ status: 404, message: "Habit not found" });
+    } else if (error.message === "userNotFound") {
+      next({ status: 404, message: "User not found" });
+    } else if (error.message === "userIsOwner") {
+      next({ status: 401, message: "User is owner of habit" });
+    } else {
+      next();
+    }
+  }
+};
+
+// @desc Unlike a habit
+// @route PUT /api/v1/habits/:id/unlike
+// @acess Private
+
+const unlikeHabit = async (req, res, next) => {
+  const userId = req.user.id;
+  const habitId = req.params.id;
+
+  try {
+    const result = await unlikeOneHabit(userId, habitId);
+    res.status(200).json(result);
+  } catch (error) {
+    if (error.message === "habitNotFound") {
+      next({ status: 404, message: "Habit not found" });
+    } else if (error.message === "userNotFound") {
+      next({ status: 404, message: "User not found" });
+    } else if (error.message === "userIsOwner") {
+      next({ status: 401, message: "User is owner of habit" });
+    } else {
+      next();
+    }
+  }
+};
+
 module.exports = {
   getHabits,
   setHabit,
@@ -143,4 +194,6 @@ module.exports = {
   deleteHabit,
   getHabit,
   getPublicHabits,
+  likeHabit,
+  unlikeHabit,
 };

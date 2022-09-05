@@ -39,6 +39,7 @@ const habitSchema = mongoose.Schema(
     private: {
       type: Boolean,
     },
+    likes: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }],
   },
   {
     timestamps: true,

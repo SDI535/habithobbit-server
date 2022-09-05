@@ -140,6 +140,79 @@ const deleteOneHabit = async (habitId, userId) => {
   return result;
 };
 
+//like a public Habit
+const likeOneHabit = async (userId, habitId) => {
+  let result = {};
+  //check for habit
+
+  const habit = await Habit.findById(habitId);
+
+  if (!habit) {
+    throw new Error("habitNotFound");
+  }
+
+  //check for user
+
+  const user = await User.findById(userId);
+  if (!user) {
+    throw new Error("userNotFound");
+  }
+
+  //check habit user matches login user. owner cannot like their own habit
+
+  if (habit.user.toString() === user.id) {
+    throw new Error("userIsOwner");
+  }
+
+  const updatedHabit = await Habit.findByIdAndUpdate(
+    habitId,
+    { $push: { likes: userId } },
+    { new: true }
+  );
+
+  if (updatedHabit) {
+    result.success = true;
+    result.message = `habit ${habitId} like by user ${userId} successfully`;
+    result.data = updatedHabit;
+  }
+  return result;
+};
+
+//unlike a public Habit
+const unlikeOneHabit = async (userId, habitId) => {
+  let result = {};
+  //check for habit
+  const habit = await Habit.findById(habitId);
+
+  if (!habit) {
+    throw new Error("habitNotFound");
+  }
+
+  //check for user
+  const user = await User.findById(userId);
+  if (!user) {
+    throw new Error("userNotFound");
+  }
+
+  //check habit user matches login user. owner cannot unlike their own habit
+  if (habit.user.toString() === user.id) {
+    throw new Error("userIsOwner");
+  }
+
+  const updatedHabit = await Habit.findByIdAndUpdate(
+    habitId,
+    { $pull: { likes: userId } },
+    { new: true }
+  );
+
+  if (updatedHabit) {
+    result.success = true;
+    result.message = `habit ${habitId} unlike by user ${userId} successfully`;
+    result.data = updatedHabit;
+  }
+  return result;
+};
+
 module.exports = {
   getAllHabits,
   createOneHabit,
@@ -147,4 +220,6 @@ module.exports = {
   deleteOneHabit,
   getOneHabit,
   getAllPublicHabits,
+  likeOneHabit,
+  unlikeOneHabit,
 };
