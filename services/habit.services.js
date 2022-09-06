@@ -162,9 +162,9 @@ const likeOneHabit = async (userId, habitId) => {
 
   //check habit user matches login user. owner cannot like their own habit
 
-  if (habit.user.toString() === user.id) {
-    throw new Error("userIsOwner");
-  }
+  // if (habit.user.toString() === user.id) {
+  //   throw new Error("userIsOwner");
+  // }
 
   const updatedHabit = await Habit.findByIdAndUpdate(
     habitId,
@@ -197,9 +197,9 @@ const unlikeOneHabit = async (userId, habitId) => {
   }
 
   //check habit user matches login user. owner cannot unlike their own habit
-  if (habit.user.toString() === user.id) {
-    throw new Error("userIsOwner");
-  }
+  // if (habit.user.toString() === user.id) {
+  //   throw new Error("userIsOwner");
+  // }
 
   const updatedHabit = await Habit.findByIdAndUpdate(
     habitId,

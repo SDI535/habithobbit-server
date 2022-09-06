@@ -153,8 +153,6 @@ const likeHabit = async (req, res, next) => {
       next({ status: 404, message: "Habit not found" });
     } else if (error.message === "userNotFound") {
       next({ status: 404, message: "User not found" });
-    } else if (error.message === "userIsOwner") {
-      next({ status: 401, message: "User is owner of habit" });
     } else {
       next();
     }
@@ -177,8 +175,6 @@ const unlikeHabit = async (req, res, next) => {
       next({ status: 404, message: "Habit not found" });
     } else if (error.message === "userNotFound") {
       next({ status: 404, message: "User not found" });
-    } else if (error.message === "userIsOwner") {
-      next({ status: 401, message: "User is owner of habit" });
     } else {
       next();
     }
