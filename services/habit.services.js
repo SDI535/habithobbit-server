@@ -2,6 +2,8 @@ const { RestoreRequestFilterSensitiveLog } = require("@aws-sdk/client-s3");
 const Habit = require("../models/habit.model");
 const User = require("../models/user.model");
 
+//Get all habits of login user
+
 const getAllHabits = async (user) => {
   let result = {};
   const habits = await Habit.find({ user });
@@ -16,8 +18,11 @@ const getAllHabits = async (user) => {
   return result;
 };
 
-const getAllPublicHabits = async (user) => {
+//Get all public habits of all users
+const getAllPublicHabits = async (user, page) => {
   let result = {};
+  const habitsPerPage = 10;
+
   const userExist = await User.findById(user);
   if (!userExist) {
     throw new Error("userNotFound");
@@ -27,11 +32,13 @@ const getAllPublicHabits = async (user) => {
       path: "user",
       select: ["username", "avatarUrl"],
     })
-    .sort({ createdAt: -1 });
+    .sort({ createdAt: -1 })
+    .skip(page * habitsPerPage)
+    .limit(habitsPerPage);
 
   if (publicHabits) {
     result.success = true;
-    result.message = "Get all public habits successfully";
+    result.message = `Get all habits (10 per page) of page ${page} successfully`;
     result.data = publicHabits;
   } else {
     throw new Error();
