@@ -177,7 +177,10 @@ const likeOneHabit = async (userId, habitId) => {
     habitId,
     { $push: { likes: userId } },
     { new: true }
-  );
+  ).populate({
+    path: "user",
+    select: ["username", "avatarUrl"],
+  });
 
   if (updatedHabit) {
     result.success = true;
@@ -212,7 +215,10 @@ const unlikeOneHabit = async (userId, habitId) => {
     habitId,
     { $pull: { likes: userId } },
     { new: true }
-  );
+  ).populate({
+    path: "user",
+    select: ["username", "avatarUrl"],
+  });
 
   if (updatedHabit) {
     result.success = true;
