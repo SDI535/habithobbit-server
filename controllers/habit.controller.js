@@ -31,8 +31,9 @@ const getHabits = async (req, res, next) => {
 
 const getPublicHabits = async (req, res, next) => {
   const user = req.user.id;
+  const page = req.query.p || 0;
   try {
-    const result = await getAllPublicHabits(user);
+    const result = await getAllPublicHabits(user, page);
     res.status(200).json(result);
   } catch (error) {
     next();
