@@ -153,6 +153,8 @@ const likeHabit = async (req, res, next) => {
       next({ status: 404, message: "Habit not found" });
     } else if (error.message === "userNotFound") {
       next({ status: 404, message: "User not found" });
+    } else if (error.message === "userExistsInLikes") {
+      next({ status: 400, message: "User has liked the habit" });
     } else {
       next();
     }
@@ -175,6 +177,8 @@ const unlikeHabit = async (req, res, next) => {
       next({ status: 404, message: "Habit not found" });
     } else if (error.message === "userNotFound") {
       next({ status: 404, message: "User not found" });
+    } else if (error.message === "userNotFoundInLikes") {
+      next({ status: 400, message: "User has not liked the habit yet" });
     } else {
       next();
     }

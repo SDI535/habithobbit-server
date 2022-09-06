@@ -160,11 +160,11 @@ const likeOneHabit = async (userId, habitId) => {
     throw new Error("userNotFound");
   }
 
-  //check habit user matches login user. owner cannot like their own habit
+  //check if login user already like the habit
 
-  // if (habit.user.toString() === user.id) {
-  //   throw new Error("userIsOwner");
-  // }
+  if (habit.likes.includes(userId)) {
+    throw new Error("userExistsInLikes");
+  }
 
   const updatedHabit = await Habit.findByIdAndUpdate(
     habitId,
@@ -196,10 +196,10 @@ const unlikeOneHabit = async (userId, habitId) => {
     throw new Error("userNotFound");
   }
 
-  //check habit user matches login user. owner cannot unlike their own habit
-  // if (habit.user.toString() === user.id) {
-  //   throw new Error("userIsOwner");
-  // }
+  //check if user is in likes array
+  if (!habit.likes.includes(userId)) {
+    throw new Error("userNotFoundInLikes");
+  }
 
   const updatedHabit = await Habit.findByIdAndUpdate(
     habitId,
